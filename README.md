@@ -98,22 +98,19 @@ http:
         certResolver: le
 ```
 
-# Crontab
+# Start on boot
 
-Traefik does not start by default in FreeBSD. We use crontab to auto start our Traefik script
+To start Traefik on boot, in addition to setting `traefik_enable=YES`, we need to specify which configuration file Traefik needs to load on boot. This is done by setting `traefik_conf=""` in `/etc/rc.conf`, in our example this would be `traefik_conf="/usr/local/etc/traefik.yml"`
 
-```
-crontab -e
-```
-
-Paste the following:
-
-```
-@reboot /usr/local/bin/traefik --configFile=/usr/local/etc/traefik.yml
-```
-
-Finally, hit reboot to test
+Hit reboot to test
 
 ```
 reboot
+```
+
+Finally, validate that Traefik is running
+
+```console
+root@proxy:~ # service traefik status
+traefik is running as pid 27019.
 ```
